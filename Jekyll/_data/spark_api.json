@@ -1,0 +1,859 @@
+{
+    "Spark": [
+      {
+        "object": "Scene",
+        "inherits": "instance</h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "root",
+            "type": "object readonly",
+            "description": "returns the root for the scene"
+          },
+          {
+            "name": "w",
+            "type": "number readonly",
+            "description": "returns the width in pixel-sized units of the scene"
+          },
+          {
+            "name": "h",
+            "type": "number readonly",
+            "description": "returns the height in pixel-sized units of the scene"
+          },
+          {
+            "name": "animation",
+            "type": "object",
+            "description": "for animation-related constants"
+          },
+          {
+            "name": "stretch",
+            "type": "object",
+            "description": "for x/y stretch-related constants"
+          },
+          {
+            "name": "alignVertical",
+            "type": "object",
+            "description": "for vertical alignment-related constants"
+          },
+          {
+            "name": "alignHorizontal",
+            "type": "object",
+            "description": "for horizontal alignment-related constants"
+          },
+          {
+            "name": "truncation",
+            "type": "object",
+            "description": "for truncation-related constants"
+          }
+        ],
+        "methods": [
+          {
+            "name": "create(json)",
+            "type": "object",
+            "description": "create a subtree of scene graph Objects \nbr / > Use json t: to construct specific object types:\n<li > < a href = '#text' > text < /a></li >\n<li > < a href = '#textBox' > textBox < /a></li >\n<li > < a href = '#wayland' > wayland < /a></li >\n<li > < a href = '#image' > image < /a></li >\n<li > < a href = '#image9' > image9 < /a></li >\n <li > < a href = '#rectangle' > rect < /a></li >\n<li > < a href = '#object' > object < /a></li ><li > < a href = '#scene' > scene < /a></li >\n<dt class = 'resource' > create(json) < /dt> <\ndd > create resources that can be shared \n<br / > Use json t: to construct specific resource types:\n<li > < a href = '#imageResource' > imageResource < /a></li >\n<li > < a href = '#fontResource' > fontResource < /a></li > "
+          },
+          {
+            "name": "on(string, function)",
+            "type": "void",
+            "description": "<dd>registers a function callback for the specified event:\n<ul>\n                <li>onMouseDown - parameter object has properties: x, y, flags </li>\n                <li>onMouseUp - parameter object hasproperties: x, y, flags </li>\n                <li>onMouseMove - parameter object has properties: x, y </li>\n                <li>onMouseEnter  - parameter object has properties: target, stopPropagation()   </li>\n                <li>onMouseLeave  - parameter object has properties: target, stopPropagation()  </li>\n                <li>onFocus  - parameter object has properties: target, stopPropagation()  </li>\n                <li>onBlur  - parameter object has properties: target, loseFocusChain, stopPropagation() - \n                  <ul>loseFocusChain: true or false to indicate whether the object receiving this onBlur event is \n                    within the heirarchy of the object losing focus.  Example usage: </li></ul>\n                  </li>\n                <li>onKeyDown  - parameter object has properties: target, keyCode, flags, stopPropagation() </li>\n                <li>onKeyUp  - parameter object has properties: target, keyCode, flags, stopPropagation() </li>\n                <li>onChar  - parameter object has properties: target, charCode, stopPropagation()</li>\n                <li>onResize - parameter object has properties w, h</li>\n                <li>onClose - parameter object no properties -\n                    <ul>onClose indicates the object scene is destructed and garbage collected</ul>\n                </li>\n              </ul>\n            </dd>"
+          },
+          {
+            "name": "delListener(string, function)",
+            "type": "void",
+            "description": "unregister a callback function for the specified event"
+          },
+          {
+            "name": "getFocus()",
+            "type": "object",
+            "description": "will return the object that has keyboard focus"
+          }
+        ]
+      },
+      {
+        "object": "Object",
+        "inherits": "instance</h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "parent",
+            "type": "object readonly",
+            "description": "returns this object's parent <a href='#object'>Object</a>"
+          },
+          {
+            "name": "x",
+            "type": "number",
+            "description": "x-coordinate used as input into the object's transform function in pixel units"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "description": "y-coordinate used as input into the object's transform function in pixel units"
+          },
+          {
+            "name": "w",
+            "type": "number",
+            "description": "pixel unit width of the object"
+          },
+          {
+            "name": "h",
+            "type": "number",
+            "description": "pixel unit height of the object"
+          },
+          {
+            "name": "cx",
+            "type": "number",
+            "description": "x offset used as the center of rotation and scale"
+          },
+          {
+            "name": "cy",
+            "type": "number",
+            "description": "y offset used as the center of rotation and scale"
+          },
+          {
+            "name": "sx",
+            "type": "number",
+            "description": "scale factor in the x dimension"
+          },
+          {
+            "name": "sy",
+            "type": "number",
+            "description": "scale factor in the y dimension"
+          },
+          {
+            "name": "a",
+            "type": "number",
+            "description": "opacity of the object [0-1]"
+          },
+          {
+            "name": "r",
+            "type": "number",
+            "description": "angle of rotation in degrees"
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "user-assigned associated string identifier for the object. defaults to '.'"
+          },
+          {
+            "name": "interactive",
+            "type": "boolean",
+            "description": "determines whether the object is mouse interactive. defaults to true."
+          },
+          {
+            "name": "painting",
+            "type": "boolean",
+            "description": "when set to false the object and it's children will be snapshotted. when set to true the object and it's children will immediately reflect any changes"
+          },
+          {
+            "name": "clip",
+            "type": "boolean",
+            "description": "determines whether the drawing done by the object and it's children will be clipped by the objects w and h properties. defaults to false."
+          },
+          {
+            "name": "mask",
+            "type": "boolean",
+            "description": "determines whether this object will be used to define an alpha layer mask for the siblings of this object. defaults to false."
+          },
+          {
+            "name": "draw",
+            "type": "boolean",
+            "description": "determines whether this object will be drawn"
+          },
+          {
+            "name": "focus",
+            "type": "boolean",
+            "description": "when set to true, this object will be given keyboard focus. the object that had previous focus will be blurred."
+          },
+          {
+            "name": "numChildren",
+            "type": "number",
+            "description": "returns the number of immediate child objects that this object parents"
+          },
+          {
+            "name": "children",
+            "type": "array",
+            "description": "returns a collection of child objects for this object"
+          }
+        ],
+        "methods": [
+          {
+            "name": "getChild(i)",
+            "type": "object",
+            "description": "returns the i-th child for this object"
+          },
+          {
+            "name": "remove",
+            "type": "void",
+            "description": "removes this object from the scene"
+          },
+          {
+            "name": "removeAll",
+            "type": "void",
+            "description": "removes all children and their descendents from the scene."
+          },
+          {
+            "name": "moveToFront",
+            "type": "void",
+            "description": "Moves this child to the top of the z-order within its siblings"
+          },
+          {
+            "name": "moveToBack",
+            "type": "void",
+            "description": "Moves this child to the bottom of the z-order within its siblings"
+          },
+          {
+            "name": "moveForward",
+            "type": "void",
+            "description": "Moves this child one forward in the z-order within its siblings"
+          },
+          {
+            "name": "moveBackward",
+            "type": "void",
+            "description": "Moves this child one backward in the z-order within its siblings"
+          },
+          {
+            "name": "animateTo(json, duration, tween, type, count)",
+            "type": "promise",
+            "desciption": "<dd>tween the object's properties to the targets specified over the specified duration using the tween function.\n                <li>Tween indicates the interpolator to be used for the animation.  See for valid values. Defaults to TWEEN_LINEAR.</li>  \n                <li>Type (option) determines whether the animation loops or oscillates. See for valid values. Defaults to OPTION_LOOP.</li>\n                <li>Count is the number of times the animation should repeat.  Defaults to 1. Use COUNT_FOREVER to create an animation that won't end until canceled.</li>\n                Returns a promise that will fulfill when the animation is complete.</dd>\n                <dt class='object'>animate(json, duration, tween, type, count)</dt>\n                <dd>tween the object's properties to the targets specified over the specified duration using the tween function.  </li>\n                <li>Tween indicates the interpolator to be used for the animation.  See for valid values. Defaults to TWEEN_LINEAR.</li>  \n                <li>Type (option) determines whether the animation loops or oscillates. See for valid values. Defaults to OPTION_LOOP.</li>\n                <li>Count is the number of times the animation should repeat.  Defaults to 1. Use COUNT_FOREVER to create an animation that won't end until canceled.</li>\n                Returns an object that can be used to cancel or check on status of the animation.</dd>\n                <dt class='void'on(string, function)</dt>\n                <dd>registers a function callback for the specified event:\n                <li>onMouseDown - parameter object has properties: x, y, flags </li>\n                <li>onMouseUp - parameter object hasproperties: x, y, flags </li>\n                <li>onMouseMove - parameter object has properties: x, y </li>\n                <li>onMouseEnter </li>\n                <li>onMouseLeave </li>\n                <li>onFocus </li>\n                <li>onBlur </li>\n                <li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>\n                <li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>\n                <li>onChar  - parameter object has properties: target, charCode</li>\n                <li>onSize - parameter object has properties w, h</li>\n                "
+          },
+          {
+            "name": "delListener(string, function)",
+            "type": "void",
+            "description": "unregisters a function callback for the specified event"
+          },
+          {
+            "name": "getObjectById(id)",
+            "type": "void",
+            "description": "returns object with associated id.  search scope is this object and its children."
+          }
+        ]
+      },
+      {
+        "object": "scene",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "url",
+            "type": "readonly string",
+            "description": "the url to JavaScript file that defines this scene"
+          }
+        ]
+      },
+      {
+        "object": "Rectangle",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "fillColor",
+            "type": "number",
+            "description": "specifies the color to fill the interior of the rectangle. eg. 0xff0000ff, opaque red, Format: 0xrrggbbaa<br><br>NOTE:  Web style <b>'#rgb'</b> and <b>'#rrggbb'</b> are also supported at 'create()' time, as a convenience shortcut."
+          },
+          {
+            "name": "lineColor",
+            "type": "number",
+            "description": "specifies the color to stroke the edge of the rectangle. eg. 0xff0000ff, opaque red, Format: 0xrrggbbaa<br><br>NOTE:  Web style <b>'#rgb'</b> and <b>'#rrggbb'</b> are also supported at 'create()' time, as a convenience shortcut."
+          },
+          {
+            "name": "lineWidth",
+            "type": "number",
+            "description": "species the width of the line to stroke around the ege of the rectangle. defaults to 0."
+          }
+        ]
+      },
+      {
+        "object": "Image",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "specifies the url of the image to load. supports .png and .jpg"
+          },
+          {
+            "name": "stretchX",
+            "type": "number",
+            "description": "specifies the stretch option to use for the x-coordinate. See <a href='#stretch'>stretch constants.</a>"
+          },
+          {
+            "name": "stretchY",
+            "type": "number",
+            "description": "specifies the stretch option to use for the y-coordinate. See <a href='#stretch'>stretch constants.</a>"
+          },
+          {
+            "name": "ready",
+            "type": "promise",
+            "description": "returns a promise for when the object is ready"
+          },
+          {
+            "name": "resource",
+            "type": "resource",
+            "description": "specifies the to be used by this image\n                <br/>\n                <dd>Note that setting url will create an and set the resource property for this image.\n                <br/><br/> Note that w or h equal to -1 will cause the image to be rendered using the <a href='#imageResource'><code>imageResource</code></a>'s associated property.</dd>\n                <hr/>\n                  <br/><br/>"
+          }
+        ]
+      },
+      {
+        "object": "Image9",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "specifies the url of the image to load. supports .png and .jpg"
+          },
+          {
+            "name": "insetLeft",
+            "type": "number",
+            "description": "specifies the first slicing offset on the x-axis"
+          },
+          {
+            "name": "insetTop",
+            "type": "number",
+            "description": "specifies the first slicing offset on the y-axis"
+          },
+          {
+            "name": "insetRight",
+            "type": "number",
+            "description": "specifies the second slicing offset on the x-axis"
+          },
+          {
+            "name": "insetBottom",
+            "type": "number",
+            "description": "specifies the second slicing offset on the y-axis"
+          },
+          {
+            "name": "ready",
+            "type": "promise",
+            "description": "returns a promise for when the object is ready"
+          },
+          {
+            "name": "resource",
+            "type": "resource",
+            "description": "specifies the to be used by this image9 \n                      <br/>\n                      <dd>Note that setting url will create an and set the resource property for this image9.</dd>\n                      <hr/>\n                      <br/><br/>\n                      <h2><a name='text'></a><code>Text</code> instance inherits from <a href='#object'><code>Object</code></a></h2>\n                      Text height and width are determined at runtime based on the text value, font, pixelSize, etc.\n                      "
+          }
+        ]
+      },
+      {
+        "object": "Text",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "Text height and width are determined at runtime based on the text value, font, pixelSize, etc.",
+        "properties": [
+          {
+            "name": "text",
+            "type": "string",
+            "description": "specifies the text to render"
+          },
+          {
+            "name": "textColor",
+            "type": "number",
+            "description": "specifies the color to render the text. eg. 0xff0000ff,opaque red,0xrrggbbaa. defaults to opaque black [0x000000ff].<br><br>NOTE:  Web style <b>'#rgb'</b> and <b>'#rrggbb'</b> are also supported at 'create()' time, as a convenience shortcut."
+          },
+          {
+            "name": "pixelSize",
+            "type": "number",
+            "description": "specifies the pixelSize of the rendered text"
+          },
+          {
+            "name": "fontUrl",
+            "type": "string",
+            "description": "specifies the url of the face to use."
+          },
+          {
+            "name": "ready",
+            "type": "promise",
+            "description": "returns a promise for when the object is ready"
+          },
+          {
+            "name": "font",
+            "type": "resource",
+            "description": "specifies the to be used by this text\n                        <br/>\n                        <dd>Note that setting url will create a and set the font property for this text.</dd>\n                        <hr/>"
+          }
+        ]
+      },
+      {
+        "object": "TextBox",
+        "inherits": "instance inherits from <a href='#text'><code>Text</code></a></h2>",
+        "description": "\n<br/><br/>\n<h2><a name='textBox'></a><code>TextBox</code> instance inherits from <a href='#text'><code>Text</code></a></h2>\nUnlike <a href='#text'><code>Text</code></a>, the height and width of TextBox does NOT change based on the text value; instead, the height and width values in constructor and assignments are respected, and the text is rendered within those dimensions, according to the property values, below.\n<br/><br/>\n<div>Behaviors for alignment, wordWrap and clip:\n<ul>\n<li>If truncation is none and wrap is true, then the text will continue to flow beyond the height of the bounding rectangle, possibly cut off if clip is applied.</li>\n\n<li>If truncation is none, and wrap is false, then the line(s) (that /n case has to be taken into consideration) should be centered in the view, even if the text goes beyond its x/width boundaries.  If clip is true, text is cut off on either end.  Such as:\n<br/><br/>\n<ul/>alignHorizontal CENTER\n<br/><ul>The qu|ick brown fox jumped over the la|zy dog</ul>\n<ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|ick brown fox jumped over the la|</ul>\n<br/>\nOr\n<br/><br/>\nalignHorizontal RIGHT\n<br/><ul>The quick br|own fox jumped over the lazy dog|</ul>\n<ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|own fox jumped over the lazy dog|</ul>\n</li>\n</ul>\n</ul>\n</div>\n",
+        "properties": [
+          {
+            "name": "wordWrap",
+            "type": "boolean",
+            "description": "when width > 0, and wordWrap is true, wraps text at width of text box. defaults to false.\n            <dt class='number'> xStartPos </dt>\n            <dd>x position relative to the text box object, in pixels, for the first line of text only, similar to an indent. defaults to 0.\n            <br/>NOTE:  xStartPos and xStopPos are only applied when horizontalAlign=LEFT.</dd>\n            <dt class='number'> xStopPos </dt>\n            <dd>x position where text must stop flowing on the last line of text only.  If ellipses are applied, the ellipses must also stop at this location.  defaults to 0.\n            <br/>NOTE:  xStartPos and xStopPos are only applied when horizontalAlign=LEFT.\n            <br/>NOTE:  xStopPos can only be applied when truncation is true.</dd> "
+          },
+          {
+            "name": "ellipsis",
+            "type": "boolean",
+            "description": "indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE. defaults to false."
+          },
+          {
+            "name": "truncation",
+            "type": "number",
+            "description": "see <a href='#truncation'>truncation constants</a>.  defaults to NONE."
+          },
+          {
+            "name": "alignHorizontal",
+            "type": "number",
+            "description": "see <a href='#alignHorizontal'>horizontal alignment constants</a>. defaults to LEFT."
+          },
+          {
+            "name": "alignVertical",
+            "type": "number",
+            "description": "see <a href='#alignVertical'>vertical alignment constants</a>. defaults to TOP."
+          },
+          {
+            "name": "leading",
+            "type": "number",
+            "description": "number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.  defaults to 0.\n                    </dd>\n                    <hr/>\n                    <h3>Methods</h3>\n                    <dt class='object'> measureText </dt>\n                    <dd>returns an object with the following properties (measurements are relative to (x,y) of the TextBox object's parent):\n                    <li>bounds - object - {x1:0, y1:0, x2:0, y2:0} - The two points representing the bounding rectangle of the complete text</li>\n                    <li>charFirst - {x:0, y:0} - The x position represents the left most rendered pixel of the first character on the first line of text. The y position represents the baseline.</li>\n                    <li>charLast - {x:0, y:0} - The x position represents the right most rendered pixel of the last character on the last line of text.  The y position represents the baseline.</li>\n                    "
+          }
+        ]
+      },
+      {
+        "object": "Wayland",
+        "inherits": "instance inherits from <a href='#object'><code>Text</code></a></h2>",
+        "description": "Creates an element which contains a Wayland display.  Any Wayland clients that connect to this display will appear in this element.",
+        "properties": [
+          {
+            "name": "displayName",
+            "type": "string",
+            "description": "Specifies the name of the Wayland display.  If no value is assigned a unique name will be generated"
+          },
+          {
+            "name": "cmd",
+            "type": "string",
+            "description": "Specifies a command to launch a Wayland client app to connect to the display.  Consists of the client name optionally followed by arguments"
+          },
+          {
+            "name": "server",
+            "type": "string",
+            "description": "Specifies the name of an rtRemote server"
+          },
+          {
+            "name": "clientPID",
+            "type": "number readonly",
+            "description": "Gives the process pid of the connected Wayland client"
+          },
+          {
+            "name": "fillColor",
+            "type": "number",
+            "description": "specifies the color to fill the interior of the element. eg. 0xff0000ff, opaque red, 0xrrggbbaa.  This will provide background for the connected Wayland client"
+          },
+          {
+            "name": "hasApi",
+            "type": "boolean",
+            "description": "indicates if the element exports an API."
+          },
+          {
+            "name": "api",
+            "type": "object",
+            "description": "If hasApi is true, then this is the element's exported API"
+          },
+          {
+            "name": "remoteReady",
+            "type": "promise",
+            "description": "returns a promise for when the remote object is ready"
+          }
+        ],
+        "methods": [
+          {
+            "name": "suspend(bool)",
+            "type": "void",
+            "description": "Causes the element to cease drawing"
+          },
+          {
+            "name": "resume(bool)",
+            "type": "void",
+            "description": "Causes the element to resume drawing"
+          },
+          {
+            "name": "destroy(bool)",
+            "type": "void",
+            "description": "Destroys the element"
+          }
+        ]
+      },
+      {
+        "object": "SceneContainer",
+        "inherits": "instance inherits from <a href='#object'><code>Object</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "specifies the url of the JavaScript to use for the child scene"
+          }
+        ]
+      },
+      {
+        "object": "Resource",
+        "inherits": "",
+        "description": "Note: Once Resource is created, the url and proxy are readonly.",
+        "properties": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "url to the resource to be loaded"
+          },
+          {
+            "name": "proxy",
+            "type": "string",
+            "description": "http proxy url to be used while downloading"
+          },
+          {
+            "name": "ready",
+            "type": "promise",
+            "description": "returns a promise when the resource is loaded (Read only)"
+          },
+          {
+            "name": "loadStatus",
+            "type": "array",
+            "description": "array of status values (Read only)"
+          }
+        ]
+      },
+      {
+        "object": "imageResource",
+        "inherits": "instance inherits from <a href='#resource'><code>Resource</code></a></h2>",
+        "description": "",
+        "properties": [
+          {
+            "name": "w",
+            "type": "number",
+            "description": "pixel unit width of the image"
+          },
+          {
+            "name": "h",
+            "type": "number",
+            "description": "pixel unit height of the image"
+          }
+        ]
+      },
+      {
+        "object": "fontResource",
+        "inherits": "instance inherits from <a href='#resource'><code>Resource</code></a></h2>",
+        "description": "",
+        "properties": [],
+        "methods": [
+          {
+            "name": "getFontMetrics(pixelSize)",
+            "type": "object",
+            "description": "Returns information about the font based on pixelSize.  See section 3.a in http://www.freetype.org/freetype2/docs/tutorial/step2.html.  The returned object has the following properties:\n  <li>height - float - the distance between baselines</li>\n  <li>ascent - float - the distance from the baseline to the font ascender (note that this is a hint, not a solid rule)</li>\n  <li>descent - float - the distance from the baseline to the font descender  (note that this is a hint, not a solid rule)</li>\n  <li>naturalLeading - float - the distance that must be placed between two lines of text (See linegap in section 2 in http://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html#section-1)</li>\n  <li>baseline - float - the baseline position for a line of text</li>\n  </dd>"
+          },
+          {
+            "name": "measureText(pixelSize, textToMeasure)",
+            "type": "object",
+            "description": "Returns an object from which height and width of the measured text can be obtained.  Note that this measurement does not consider truncation, word wrapping or alignment that could be used in a TextBox containing this text.\n  <li>h - float - the height of the text</li>\n  <li>w - float - the width of the text</li>"
+          }
+        ]
+      },
+      {
+        "object": "Animate",
+        "inherits": "",
+        "description": "The Animate object is returned from the animate() method. It can be used to check on the status of an animation, as well as to cancel the animation. ",
+        "properties": [
+          {
+            "name": "done",
+            "type": "promise",
+            "description": "Promise that indicates completion of the animation"
+          },
+          {
+            "name": "type",
+            "type": "number",
+            "description": "the type (option) of the animation, e.g. whether the animation loops or oscillates. See for valid values. (Read only)"
+          },
+          {
+            "name": "interp",
+            "type": "number",
+            "description": "Indicates the interpolator used for this animation. See for valid values. (Read only)"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "description": "status of the animation. See for valid values. Note that this is the constant name returned as a string rather than as its numeric value. (Read only)"
+          },
+          {
+            "name": "provduration",
+            "type": "number",
+            "description": "duration value used when the animate function was called (Read only)\n                    <dt class='number'> provcount </dt>\n                    <dd>count value used when the animate function was called. Could be positive numeric value or a constant. See for valid constant values. (Read only)/dd>"
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "description": "reflects whether or not the animation has been canceled. (Read only)"
+          },
+          {
+            "name": "props",
+            "type": "object",
+            "description": "object whose properties are the properties that are being animated, and those property values are the target values for the animation"
+          },
+          {
+            "name": "details",
+            "type": "object",
+            "description": "object whose properties are the properties that are being animated, and those property values are an object reflecting the current state of the animation for that property."
+          }
+        ],
+        "methods": [
+          {
+            "name": "cancel()",
+            "type": "object",
+            "description": "Cancels the animation."
+          }
+        ]
+      },
+      {
+        "object": "AnimationDetail",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "from",
+            "type": "number",
+            "description": "the start value for the current state of this animation. (Read only)"
+          },
+          {
+            "name": "to",
+            "type": "number",
+            "description": "the end value for the current state of this animation. (Read only)"
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "description": "the duration value for the current state of this animation. (Read only)"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "description": "current count number for this animation. (Read only)"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "description": "current status for this animation. See for valid values. Note that this is the constant name returned as a string rather than as its numeric value. (Read only)"
+          }
+        ]
+      },
+      {
+        "object": "Animation Constants",
+        "inherits": "",
+        "description": "http://www.pxscene.org/examples/px-reference/gallery/dynamics.js demonstrates the different animation interpolators available.",
+        "properties": [
+          {
+            "name": "Interpolators",
+            "type": "array",
+            "description": "returns a collection of valid TWEEN_ and EASE_ interpolator constants"
+          },
+          {
+            "name": "TWEEN_LINEAR",
+            "type": "number",
+            "description": "constant for specifying a linear tween. constant value is 0."
+          },
+          {
+            "name": "TWEEN_EXP1",
+            "type": "number",
+            "description": "constant for specifying a exp1 tween. constant value is 1."
+          },
+          {
+            "name": "TWEEN_EXP2",
+            "type": "number",
+            "description": "constant for specifying a exp2 tween. constant value is 2."
+          },
+          {
+            "name": "TWEEN_EXP3",
+            "type": "number",
+            "description": "constant for specifying a exp3 tween. constant value is 3."
+          },
+          {
+            "name": "TWEEN_STOP",
+            "type": "number",
+            "description": "constant for specifying a stop (easein) tween. constant value is 4."
+          },
+          {
+            "name": "EASE_IN_QUAD",
+            "type": "number",
+            "description": "constant for specifying a 'inquad' tween. constant value is 5."
+          },
+          {
+            "name": "EASE_IN_CUBIC",
+            "type": "number",
+            "description": "constant for specifying a 'incubic' tween. constant value is 6."
+          },
+          {
+            "name": "EASE_IN_BACK",
+            "type": "number",
+            "description": "constant for specifying a 'inback' tween. constant value is 7."
+          },
+          {
+            "name": "EASE_IN_ELASTIC",
+            "type": "number",
+            "description": "constant for specifying a 'easeinelastic' tween. constant value is 8."
+          },
+          {
+            "name": "EASE_OUT_ELASTIC",
+            "type": "number",
+            "description": "constant for specifying a 'easeoutelastic' tween. constant value is 9."
+          },
+          {
+            "name": "EASE_OUT_BOUNCE",
+            "type": "number",
+            "description": "constant for specifying a 'easeoutbounce' tween. constant value is 10."
+          }
+        ]
+      },
+      {
+        "object": "Animation Options",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "OPTION_OSCILLATE",
+            "type": "number",
+            "description": "constant for use as the type in the animateTo method. the animation with oscillate back and forth. constant value is 1."
+          },
+          {
+            "name": "OPTION_LOOP",
+            "type": "number",
+            "description": "constant for use as the type in the animateTo method.  the animation will loop continuously. constant value is 2."
+          },
+          {
+            "name": "OPTION_FASTFORWARD",
+            "type": "number",
+            "description": "constant for use as an option in the animateTo method.  This value can be OR'd with the OPTION type to indicate that any animations in progress should fastforward to their ending values. constant value is 8."
+          },
+          {
+            "name": "OPTION_REWIND",
+            "type": "number",
+            "description": "constant for use as the type in the animateTo method. This value can be OR'd with the OPTION type to indicate that any animations in progress should rewind to their beginning values.  constant value is 16."
+          }
+        ]
+      },
+      {
+        "object": "Animation Count",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "COUNT_FOREVER",
+            "type": "number",
+            "description": "constant to use as count to indicate the animation should never end. When using this value, the promise for the animation will resolve immediately.  constant value is -1."
+          }
+        ]
+      },
+      {
+        "object": "Animation Status",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "IDLE",
+            "type": "number",
+            "description": "constant to indicate that the animation has not yet started. constant value is 0."
+          },
+          {
+            "name": "INPROGRESS",
+            "type": "number",
+            "description": "constant to indicate that the animation is in progress. constant value is 1."
+          },
+          {
+            "name": "CANCELLED",
+            "type": "number",
+            "description": "constant to indicate that the animation has been cancelled. constant value is 2."
+          },
+          {
+            "name": "ENDED",
+            "type": "number",
+            "description": "constant to indicate that the animation has ended. constant value is 3."
+          }
+        ]
+      },
+      {
+        "object": "Stretch Constants",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "NONE",
+            "type": "number",
+            "description": "constant for use in image stretch options. constant value is 0."
+          },
+          {
+            "name": "STRETCH",
+            "type": "number",
+            "description": "constant for use in image stretch options. constant value is 1."
+          },
+          {
+            "name": "REPEAT",
+            "type": "number",
+            "description": "constant for use in image stretch options. constant value is 2."
+          }
+        ]
+      },
+      {
+        "object": "Vertical Alignment Constants",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "TOP",
+            "type": "number",
+            "description": "begin text at the upper-most y-coordinate of the <a href='#textBox'>textBox</a>. constant value is 0."
+          },
+          {
+            "name": "CENTER",
+            "type": "number",
+            "description": "center text vertically within the <a href='#textBox'>textBox</a>. constant value is 1."
+          },
+          {
+            "name": "BOTTOM",
+            "type": "number",
+            "description": "justify text to the bottom of the <a href='#textBox'>textBox</a>. constant value is 2."
+          }
+        ]
+      },
+      {
+        "object": "Horizontal Alignment Constants",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "LEFT",
+            "type": "number",
+            "description": "left-justify text in the <a href='#textBox'>textBox</a>. constant value is 0."
+          },
+          {
+            "name": "CENTER",
+            "type": "number",
+            "description": "center text horizontally in the <a href='#textBox'>textBox</a>. constant value is 1."
+          },
+          {
+            "name": "RIGHT",
+            "type": "number",
+            "description": "right-justify text in the <a href='#textBox'>textBox</a>. constant value is 2."
+          }
+        ]
+      },
+      {
+        "object": "Truncation Constants",
+        "inherits": "",
+        "description": "",
+        "properties": [
+          {
+            "name": "NONE",
+            "type": "number",
+            "description": "text is not truncated. constant value is 0."
+          },
+          {
+            "name": "TRUNCATE",
+            "type": "number",
+            "description": "text is truncated at the bottom of the <a href='#textBox'>textBox</a>.  The last word may be partially truncated. constant value is 1."
+          },
+          {
+            "name": "TRUNCATE_AT_WORD",
+            "type": "number",
+            "description": "text is truncated at the bottom of the <a href='#textBox'>textBox</a>.  Truncation occurs at the word boundary. constant value is 2."
+          }
+        ]
+      }
+    ]
+  }

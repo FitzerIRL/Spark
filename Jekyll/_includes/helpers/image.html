@@ -1,0 +1,36 @@
+{% assign pathNodes = page.relative_path | split: "/" %}
+{% assign fileName = pathNodes[2] %}
+{% assign fooName = page.date | date: "%Y-%m-%d" }}-{{ page.title | remove: " -" | replace: " ", "-" | downcase }}.md" %}
+
+{% assign assetPath = include.name | prepend: "-" | prepend: fileName | prepend: "/_posts/" %}
+
+{% capture imagePath %}{{ page.date | date: "%Y-%m-%d"  | prepend: "/_posts/"}}-{{ page.title | slugify }}/{{ include.name }}{% endcapture %}
+{% capture imagePath2 %}{{ page.path | slugify | remove: "posts-" | remove: "-md"}}/{{ include.name }}{% endcapture %}
+
+barName = {{ page.url  | remove: "kicking-the-tires.html" }} <br><br>
+fooName= {{ fooName }} <br><br>
+page.id = {{ page.id }} <br><br>
+include.name = {{ include.name }} <br><br>
+page.url = {{ page.url }} <br>
+page.path = {{ page.path }} <br>
+include.name = {{ include.name }} <br>
+page.relative_path = {{ page.relative_path }} <br>
+fileName = {{ fileName }}<br>
+imagePath = {{ imagePath }}<br> 
+imagePath2 = {{ imagePath2 }}<br>
+assetPath = {{ assetPath }}<br>
+
+src = "{{ page.id}}/{{ include.name }}"
+<!-- src="{{ page.id}}/{{ include.name }}" -->
+
+<figure class="figure {% if caption %}figure--caption{% endif %} {% if frame != false %}figure--frame{% endif %}">
+  <img
+    class="figure__image"
+    onload="this.parentElement.classList += ' figure--loaded'"    
+    src="{{ site.baseurl/include.name }}"
+    alt="{{ caption }}"
+    width="{{ width }}"
+  >
+
+  <figcaption class="figure__caption">{{ caption }}</figcaption>
+</figure>

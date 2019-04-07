@@ -1,0 +1,279 @@
+html, body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* layout */
+.header {
+  background-color:rgb(245, 234, 235);/*rgb(247, 237, 230);*/
+  border-bottom: 1px solid var(--header-bg-color);
+  grid-template-columns: 1fr 150px 60% 1fr;
+  /* !CLF */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 3;
+}
+
+.title span
+{
+  font-size: 20px;
+  font-weight: bolder;
+  font-family: Lucida Grande, arial, sans-serif;
+  margin-left: 15px;
+  color: #222;
+}
+
+
+pre {
+  padding: 15px;
+  line-height: 1.25em;
+  background: #f8f8f8;
+  border-radius:5px;
+  border:1px solid #e5e5e5;
+  overflow-x: auto;
+}
+
+/* .sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 102px;
+} */
+.wrapper__doc {
+  margin: 70px 10% auto;
+  display: flex;
+  flex-grow: 1;
+
+}
+
+/* logo */
+.logo {
+  font-weight: 900;
+  color: var(--primary-color);
+  font-size: 1.4em;
+  grid-column: 2;
+}
+
+.logo__thin {
+  font-weight: 300;
+}
+
+/* menu */
+.menu {
+  grid-template-columns: 1fr 180px 60% 1fr;
+}
+
+.menu__item {
+  padding: 1.5rem 1rem;
+}
+
+/* doc */
+.doc__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 28%;
+  background-color: var(--bg-color);
+  z-index: -1;
+}
+
+.doc__nav {
+  flex-basis: 20%;
+  font-weight: 200;
+  z-index: 2;
+}
+
+.doc__nav ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.8;
+}
+
+.doc__nav ul.fixed {
+  position: fixed;
+  top: 4rem;
+  flex-basis: 20%;
+}
+
+.doc__nav li:hover {
+  color: var(--primary-color-light);
+  cursor: pointer;
+  transition: color .3s ease-in-out;
+}
+
+.doc__nav .selected {
+  color: var(--accent-color);
+  position: relative;
+}
+
+.doc__nav .selected:after {
+  position: absolute;
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--accent-color);
+  left: -1.5rem;
+  top: 0.3rem;
+}
+
+.doc__content {
+  flex-basis: 80%;
+  padding: 0 0 5rem 1rem;
+ 
+}
+.content__ul {
+  font-weight: 200;
+}
+.content__ul__circle {
+  font-weight: 200;
+  list-style-type: circle;
+}
+.content__ol {
+  font-weight: 200;
+}
+/* typography */
+.section__title {
+  color: var(--title-color-docs);
+}
+
+@media (max-width: 1255px) {
+  .wrapper {
+    flex-direction: column;
+  }
+  .wrapper__doc {
+    flex-direction: column;
+    margin: 70px 10% auto;
+  }
+  .doc__content {
+    padding-left: 0;
+  /*  padding-top: 15%;*/
+  }
+  .doc__nav ul {
+    border-bottom: 1px solid var(--code-bg-color);
+    padding-bottom: 0.5rem;
+
+  }
+  .doc__nav ul.fixed {
+    /* nutralized the fixed menu for mobile*/
+    position: relative;
+    top: 0;
+  }
+  .doc__nav li {
+    display: inline-block;
+    padding-right: 1rem;
+  }
+  .doc__nav .selected:after {
+    display: none;
+  }
+
+
+dt:after { 
+  display: block;
+  float: right;
+  /*font-weight: normal;*/
+  border-radius: 5px;
+  /*background-color: #000;*/
+  color: white;
+  font-size: 9px;
+  /*font-weight: bold;*/
+  padding: 0 5px;
+  margin-right: -80px;
+  text-align: center;
+  width: 70px;
+  }
+  
+  /* ---------------- Start API ---------------- */
+ 
+
+  dt { 
+    color: red;
+    }
+
+  dt.object:after { 
+  content: 'Object';
+  background-color: #960039;
+  }
+  
+  dt.rectangle:after { 
+  content: 'Rectangle';
+  background-color: #960039;
+  }
+  dt.image:after { 
+  content: 'Image';
+  background-color: #960039;
+  }
+  dt.image9:after { 
+  content: 'Image9';
+  background-color: #960039;
+  }
+  dt.text:after { 
+  content: 'Text';
+  background-color: #960039;
+  }
+  dt.scenecontainer:after { 
+  content: 'SceneContainer';
+  background-color: #960039;
+  }
+  
+  
+  dt.event:after { 
+  content: 'event';
+  background-color: #e30b5d;
+  }
+  
+  dt.number:after { 
+  content: 'num';
+  background-color: #3380FF;
+  }
+  
+  dt.string:after { 
+  content: 'String';
+  background-color: #48BD00;
+  }
+  dt.array:after { 
+  content: 'Array';
+  background-color: #48BD00;
+  }
+  dt.promise:after { 
+  content: 'Promise';
+  background-color: #48BD00;
+  }
+  
+  dt.dom:after { 
+  content: 'DOM';
+  /*font-size: 8px;*/
+  background-color: #999;
+  }
+  
+  dt.boolean:after { 
+  content: 'bool';
+  background-color: #536895;
+  }
+  
+  dt.resource:after { 
+  content: 'Resource';
+  background-color: #53DDDD;
+  }
+  
+  .hint {
+  display: block;
+  color: #666;
+  font-style: italic;
+  }
+  
+  /*
+  dt.readonly { 
+  background: url(lock.gif) left center no-repeat;
+  padding-left: 30px;
+  margin-left: -30px;
+  }
+  */
+  /* ---------------- End API ---------------- */
+  
+}

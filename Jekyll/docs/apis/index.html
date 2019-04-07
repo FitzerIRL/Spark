@@ -1,0 +1,38 @@
+---
+layout: doc_page
+<!-- permalink: /docs/ -->
+---
+
+<!-- <div class="doc__bg"></div>
+<div class="wrapper__doc"> -->
+<br><br><br><br><br><br>
+
+<ul>
+    {% for api in site.data.spark_api["Spark"] %}
+      <li>
+          <h2><a name="{{ api.object }}"></a><code>{{ api.object }}</code> instance</h2>
+
+          {% if api.properties.size > 0 %}
+            <h3>Properties</h3>
+            <dl>
+              {% for pp in api.properties %}
+              <dt class="{{ pp.type }}">{{ pp.name }}</dt>
+              <dd>{{ pp.description }}</dd>
+              {% endfor %}
+            </dl>
+          {% endif %}
+
+          {% if api.methods.size > 0 %}
+          <h3>Methods</h3>
+          <dl>
+            {% for mm in api.methods %}
+            <dt class="object">{{ mm.name }}</dt>
+            <dd>{{ mm.description }}</dd>
+            {% endfor %}
+          </dl>
+          {% endif %}
+
+      </li>
+    {% endfor %}
+</ul>
+<!-- </div> -->

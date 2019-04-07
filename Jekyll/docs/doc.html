@@ -1,0 +1,311 @@
+---
+layout: doc_page
+---
+
+<div class="doc__bg"></div>
+<div class="wrapper__doc">
+<aside class="doc__nav">
+  <ul class="fixed">
+    <li class="js-btn selected">What is Spark?</li>
+    <li class="js-btn">Getting Started</li>
+    <li class="js-btn">The Spark Browser</li>
+    <li class="js-btn">px Framework</li>
+    <li class="js-btn">The API</li>
+    <li class="js-btn">Configuration</li>
+    <li class="js-btn">Application Basics</li>
+    <li class="js-btn">Advanced Topics</li>
+    <li class="js-btn">Debugging with VSCode</li>
+  </ul>
+</aside>
+<article class="doc__content">
+  <section class="js-section">
+    <h3 class="section__title">What is Spark?</h3>
+    <p>Spark is a cross-platform application engine. It is a native C++ scene graph API exposed to a Javascript engine. 
+      It allows applications to be written in JavaScript to use native rendering functionality. 
+      The authored javascript has access to the Spark API for visual elements that are used for composition.
+        <ul class="content__ul__circle">
+          <li>supports rich animation and alpha masking primitives</li>
+          <li>exposes a DOM-like programming model</li>
+          <li>supports promises for asynchronous behaviors</li>
+          <li>uses W3C event bubbling semantics</li>
+          <li>allows for runtime logic to be in downloaded javascript, running on devices</li>
+      </ul>
+    </p>
+    <p>Spark is built on top of a project called &quot;pxCore&quot;.  pxCore is a small lightweight library that provides a portable 
+      framebuffer and windowing abstraction for C++.  Spark is a 2d scene graph API that defines a small set of atomic UI elements and exposes them 
+      with JavaScript wrappers.  The result is a lightweight, portable application engine that can be used to build rich application experiences.</p>
+    <p>A high level representation of the runtime stack is below</p>
+    <p><img src="images/sparkStack.png" height="350"></p>
+    <p>The stack components.
+    <ul class="content__ul__circle">
+        <li>Native OS and graphic drivers - provides specific kernel, OS and UI services for the native system</li>
+        <li>pxCore - provides UI scene and primitive components used by the px Framework to render components.  Most
+          of pxCore is creating using C++, with JavaScript bindings to its UI API.
+        </li>
+        <li>Cross-Platform Environment - provides asynchronous runtime services required by applications, such as
+          http access, task scheduling, etc.  The initial implementation is based on Node-JS and Chrome's V8
+          JavaScript engine.  However, this may vary based on the target platform.
+        </li>
+        <li>px Framework - provides the public JavaScript API for creating reusable UI modules and applications, in
+          addition to the facilities for loading and launching px-based application modules.  Since the px Framework is just 
+          one example of what could be done with the pxCore library, its source can be found in the &quot;examples&quot; section 
+          of the pxCore GitHub Repository:  <a href="https://github.com/pxscene/pxCore/tree/master/examples/pxScene2d" class="link link--dark">examples/pxScene2d</a>
+        </li>
+    </ul>
+    </p>
+  </section>
+  <hr />
+  <section class="js-section">
+    <h3 class="section__title">Getting Started</h3>
+    <p>To get started, download and install the Spark binary for your platform. Then follow the instructions to run a few simple Spark applications.</p>
+    <p>
+        <div class="callout">
+            <p>Go to Getting Started page </p>
+            <a href="getting_started.html" class="button--primary">Getting Started</a>
+          </div>
+        </p>
+  </section>
+  <hr />
+  <section class="js-section">
+    <h3 class="section__title">The Spark Browser</h3>
+    <p></p>
+    <p>
+        <div class="callout">
+            <p>Go to Getting Started page </p>
+            <a href="browser.html" class="button--primary">The Spark Browser</a>
+          </div>
+        </p>
+  </section>       
+  <hr />
+  <section class="js-section">
+    <h3 class="section__title">px Framework</h3>
+    <p>In order to use the px framework in JavaScript, the application must &quot;import&quot; the scene API to include the versioned API for Spark widgets.
+      Spark disables the nodejs &quot;require&quot; keyword and instead provides &quot;px.import&quot; as an asynchronous loading mechanism for including
+      modules in applications.</p>  
+    <p>
+      <div class="callout">
+        <p>Read the px Framework documentation</p>
+        <a href="frameworks_doc.html" class="button--primary">px Framework Documentation</a>
+      </div>
+    </p>            
+  </section>
+  <hr />
+  <section class="js-section">
+    <h3 class="section__title">The API</h3>
+    <p>Spark provides atomic building blocks that can be composed into rich sets of components.  Building an application is easy using the Spark API!</p>
+    <p>Spark's base widgets can be grouped to make more complex components.  All visual widgets have a basic set of properties for 
+      onscreen positioning and dimensions.  In addition, any widget type can act as a parent container for other widget types; the child widgets'
+      positions will be relative to their parent's position.</p>
+    <p>The main parent container for widgets is called a &quot;scene&quot;.  When an application is started, a root scene is created as the parent for 
+      the application scene.  Scenes can then create visual widgets or even other scenes to compose a full application experience. </p>
+    <p>Spark widgets are created in JavaScript by passing a property bag to the widget creation API: 
+      <pre>     scene.create({t:'scene', url:"http://pxscene.org/examples/px-reference/gallery/gallery.js"});</pre></p>
+    <p>Each widget type has a unique set of properties, but all inherit a basic set of properties from the &quot;object&quot; type. 
+      We can construct a very simple &quot;Hello World&quot; application with just the following code: 
+      <pre>     scene.create({
+              t:"text",                // Element type will be text
+              parent: scene.root,      // Parent element
+              text:"Hello, World!",    // the text
+              x:100, y:100,            // position
+              textColor:0xff0000ff,    // RGBA - red text
+              pixelSize:64});          // font height</pre>
+      </p>
+      The Hello World example will produce the example screen shown below.
+      <p><img src="images/HelloWorldSceneSmall.png"></p>
+      </p> 
+      <br/>
+  
+    <p>The base widgets are as follows:
+      <ul class="content__ul__circle">
+        <li><a href="apis/index.html#rectangle" class="link link--dark">rect</a></li>
+        <li><a href="apis/index.html#text" class="link link--dark">text</a></li>
+        <li><a href="apis/index.html#textBox" class="link link--dark">textBox</a></li>
+        <li><a href="apis/index.html#image" class="link link--dark">image</a></li>
+        <li><a href="apis/index.html#image9" class="link link--dark">image9</a></li>
+        <li><a href="apis/index.html#imageA" class="link link--dark">imageA</a></li>
+        <li><a href="apis/index.html#object" class="link link--dark">object</a></li>
+        <li><a href="apis/index.html#scene" class="link link--dark">scene</a></li>
+        <li><a href="apis/index.html#wayland" class="link link--dark">external</a></li>
+      </ul>
+    </p>
+    <p>
+      <div class="callout">
+        <p>Read the detailed API documentation</p>
+        <a href="apis/index.html" class="button--primary">API Documentation</a>
+      </div>
+    </p>
+  </section>
+  <hr />
+  <section class="js-section">
+    <h3 class="section__title">Configuration</h3>
+    <p>Spark is ready to go &quot;out of the box&quot;, but can be configured for some advanced settings, if needed.  
+      Settings currently supported include modifications to default window size and texture memory allowances.</p>
+    <p>Spark settings can be set either via the command line (when launching Spark) or through a configuration file.  
+      To use the configuration file, create a file called .sparkSettings.json in your Home directory.
+      The configuration file will be in json format with key value pairs and will look something like this: </p>
+      <div class="nohighlight code" align="left" >
+          <code>{"screenWidth":1280, "screenHeight":720}</code>
+      </div>
+    <table id="customers">
+      <tr>
+        <th>Options</th>
+        <th>Usage</th>
+        <th>Type</th>
+        <th>Default</th>
+      </tr>
+      <tr>
+        <td>screenWidth</td>
+        <td>Specifies the width of the Spark window in pixels</td>
+        <td>integer</td>
+        <td>1280</td>
+      </tr>
+      <tr>
+        <td>screenHeight</td>
+        <td>Specifies the height of the Spark window in pixels</td>
+        <td>integer</td>
+        <td>720</td>
+      </tr>
+      <tr>
+        <td>enableTextureMemoryMonitoring</td>
+        <td>Enables the monitoring of texture memory</td>
+        <td>boolean</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>textureMemoryLimitInMb</td>
+        <td>Specifies the maximum amount of texture memory Spark can occupy</td>
+        <td>integer</td>
+        <td>85 MB</td>
+      </tr>
+      <tr>
+        <td>autoUpdateEdge</td>
+        <td>Allow the edge build to be automatically updated to the latest build.</td>
+        <td>boolean</td>
+        <td>true</td>
+      </tr>
+    </table>
+  <p>Under normal circumstances, Spark does not support the <i>require</i> keyword.  However, by creating a file called <i>.pxsceneEnableRequire</i> in the HOME directory, some distributions of 
+  the Spark binary do support it.</p>
+  <h4>Other Configuration Options</h4>
+  <ul class="content__ul__circle">
+    <li><i>Control logging level from Spark runtime</i>: An environment variable called <b>RT_LOG_LEVEL</b> controls the debug logging level of the Spark runtime. 
+      Valid values in order of greatest to least verbosity are as follows:
+    <ul class="content__ul__circle">
+      <li>debug</li><li>info</li><li>warn</li><li>error</li><li>fatal</li></ul></li>
+  </ul>
+  
+</section>
+<hr/>
+<section class="js-section">
+  <h3 class="section__title">Application Basics</h3>
+  <p> Spark applications run in a browser-<i>like</i> environment. They have a DOM and leverage HTML5 paradigms like Promises and W3C event bubbling semantics; however,
+  since they are not running in a browser, there are some differences and basics to keep in mind.  </p>
+  <p>
+  <div class="callout">
+      <p>Read more on Application Basics</p>
+      <a href="app_basics_doc.html" class="button--primary">Application Basics</a>
+    </div>
+  </p>
+</section>
+<hr/>
+<section class="js-section">
+  <h3 class="section__title">Advanced Topics</h3>
+  <p> When authoring Spark applications, there are many things to consider, such as caching and bundling applications and their resources. 
+    In addition, there are many Tips and Tricks that may be helpful when getting up and running with Spark for the first time. </p>
+  <p>
+  <div class="callout">
+    <p>Read more on Application Authoring</p>
+    <a href="app_advanced_doc.html" class="button--primary">Advanced Topics</a>
+  </div>
+  </p>
+</section>
+<hr/>
+<section class="js-section">
+  <h3 class="section__title">Debugging with VSCode</h3>
+  <p>When developing applications, it is often necessary to be able to step through the code to debug an issue.  VSCode provides a very nice
+    environment for debugging Spark applications. <i>The below steps have been verified and tested on OS X. </i> 
+    <h4>From within VSCode</h4>
+    <ol class="content__ol">
+        <li>Download and install <a href="https://code.visualstudio.com/">Visual Studio Code</a> </li>
+        <li>In Visual Studio Code use the File->Open menu to open the local directory where your Spark JavaScript application code resides, and select the file that you want to debug. 
+          <p><em>Note: Open the directory rather than just a single file; opening the directory will create a ./vscode subdirectory within your js directory, and this is needed for the debug configuration in step #3. </em>
+          </p></li>
+        <li>Click on the debug icon in Visual Studio Code (along the left-hand side) and then click on the gear (top of the left-most panel) this should open a file called launch.json. Replace the contents of launch.json with the code block below.
+          <p><em>NOTE: From VSCode 1.25 and greater ... it is necessary to include "protocol": "legacy", in launch.json.</em></p>
+          <pre class="nohighlight code" style="font-family:'Courier New'; font-size:12px">
+
+// Reference
+// https://code.visualstudio.com/Docs/editor/debugging
+// https://github.com/Microsoft/vscode/issues/102
+
+{
+"version": "0.2.0",
+"configurations": [
+{
+  "name": "DBG file in Spark",
+  "type": "node",
+  "request": "launch",
+  "protocol": "legacy",
+  "cwd": "/Applications/Spark.app/Contents/MacOS",
+  "runtimeExecutable": "/Applications/Spark.app/Contents/MacOS/Spark",
+  "args":["${file}"],
+  "env" : {
+  "LD_LIBRARY_PATH":"/Applications/Spark.app/Contents/MacOS/lib",
+  "DYLD_LIBRARY_PATH":"/Applications/Spark.app/Contents/MacOS/lib"
+  //,"BREAK_ON_SCRIPTSTART":1    
+  }
+},
+{
+  "name": "DBG Spark",
+  "type": "node",
+  "request": "launch",
+  "protocol": "legacy",
+  "cwd": "/Applications/Spark.app/Contents/MacOS",
+  "runtimeExecutable": "/Applications/Spark.app/Contents/MacOS/Spark",
+  "env" : {
+  "LD_LIBRARY_PATH":"/Applications/Spark.app/Contents/MacOS/lib",
+  "DYLD_LIBRARY_PATH":"/Applications/Spark.app/Contents/MacOS/lib"
+  //,"BREAK_ON_SCRIPTSTART":1      
+  }
+},   
+{
+"name": "Attach Spark",
+"type": "node",
+"request": "attach",
+// TCP/IP address. Default is "localhost".
+"address": "localhost",
+// Port to attach to.
+"port": 5858,
+"sourceMaps": false
+}
+]
+}
+</pre>
+        </li>
+        <li>Go back to the file that you'd like to debug (click on the explorer icon top left-hand side). 
+          Set a breakpoint by clicking to the left of the appropriate source line.
+        </li>
+        <li>Go back to the debugger. Choose the &quot;DBG Spark&quot; configuration and then click the green &quot;debug arrow&quot;. 
+          You should see the Spark application launch and in the browser url bar enter the file url that corresponds to 
+          the JavaScript file that you want to debug. Alternatively, choose the &quot;DBG file in Spark&quot; configuration, 
+          make sure the JavaScript file you want to launch is the focused file in the IDE, then click the green &quot;debug arrow&quot;. 
+          This will launch the focused file directly without displaying the Spark browser url bar.
+        </li>
+        <li>You should now be able to set and hit breakpoints in the debugger.
+            <em>Note: If you have set environment variable BREAK_ON_SCRIPTSTART=1, execution will get stopped as the JavaScript file 
+              loads; otherwise, execution will stop at breakpoints only.</em>
+        </li>
+    </ol>  
+<h4>Attaching to a running instance of spark</h4>  
+<p><em>Note: You must have started Spark with the --debug=5858 (5858 being the ip port specified in your .vscode/launch.json config file) command line option in order for this to work. eg. ./spark.sh --debug=5858</em></p>   
+    <ol class="content__ol">
+      <li>Launch Spark as described above.</li>
+      <li>Please set up your VSCode launch.json as described above. Then go to the debugger and choose the &quot;Attach pxscene&quot; config option, and click the debugger &quot;green arrow&quot;.</li>
+      <li>Within Spark enter the file URL of the JavaScript file that you want to debug.</li>
+      <li>Within VSCode, navigate to the source for the JavaScript file that you want to debug. You should now be able to set and hit breakpoints.</li>
+    </ol>
+<h4>See Also</h4>
+<p><a href="https://code.visualstudio.com/Docs/editor/debugging">https://code.visualstudio.com/Docs/editor/debugging</a></p>
+</section>
+</article>
+</div>
